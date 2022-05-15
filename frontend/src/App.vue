@@ -9,6 +9,7 @@
     <main>
       <SearchBox @weather-query="getWeatherQuery" />
       <WeatherBox :qry="query" />
+      <WeatherRadar />
     </main>
   </div>
 </template>
@@ -26,21 +27,6 @@ export default {
     };
   },
   methods: {
-    fetchWeatherData(e) {
-      e.preventDefault();
-      if (e.key == "Enter") {
-        fetch(
-          `${this.url_base}weather?q=${this.query}&units=standard&appid=${this.api_key}`
-        )
-          .then((res) => {
-            if (!res.ok) {
-              throw new Error(`HTTP error! Status: ${res.status}`);
-            }
-            return res.json();
-          })
-          .then(this.setWeatherData);
-      }
-    },
     getWeatherQuery(data) {
       this.query = data;
     },
@@ -80,18 +66,6 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
-}
-
-hr {
-  margin: 1rem 0;
-  border: 0;
-  height: 0.1rem;
-  background-image: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 0.75),
-    rgba(255, 255, 255, 0)
-  );
 }
 
 main {

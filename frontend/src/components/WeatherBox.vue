@@ -10,11 +10,11 @@
         <i class="fa-solid fa-sun"></i>
       </div>
       <div class="details">
-        <div class="temp">{{ weatherData.main.temp }} °C</div>
-        <span>feels like: {{ weatherData.main.feels_like }} °C</span>
+        <div class="temp">{{ weatherData.main.temp.toFixed(1) }} °C</div>
+        <span>feels like: {{ weatherData.main.feels_like.toFixed(1) }} °C</span>
         <div>
-          max: {{ weatherData.main.temp_max }} °C, min:
-          {{ weatherData.main.temp_min }} °C
+          max: {{ weatherData.main.temp_max.toFixed(1) }} °C, min:
+          {{ weatherData.main.temp_min.toFixed(1) }} °C
         </div>
         <hr />
         <span class="summary">
@@ -43,8 +43,7 @@ export default {
   },
   watch: {
     qry: function () {
-      this.weatherData = this.fetchWeatherData();
-      console.log(this.weatherData);
+      this.fetchWeatherData();
     },
   },
   methods: {
@@ -97,6 +96,18 @@ export default {
   box-shadow: 0 0 1rem 1rem rgba(255, 102, 0, 0.5);
 }
 
+hr {
+  margin: 1rem 0;
+  border: 0;
+  height: 0.1rem;
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.75),
+    rgba(255, 255, 255, 0)
+  );
+}
+
 .details {
   /* font-size: 3rem; */
   margin-left: 3rem;
@@ -109,7 +120,7 @@ export default {
 }
 
 .summary {
-  font-size: 3rem;
+  font-size: 2rem;
   text-shadow: 0.2rem 0.4rem rgba(0, 0, 0, 0.5);
 }
 
