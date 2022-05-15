@@ -4,14 +4,29 @@
       class="input-field"
       type="text"
       name="search-box"
-      placeholder="Search your location"
+      placeholder="Search your city"
+      v-model="query"
+      @keydown.enter="submit"
     />
     <div class="use-location"></div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: "SearchBox",
+  data() {
+    return {
+      query: "",
+    };
+  },
+  methods: {
+    submit() {
+      this.$emit("weather-query", this.query);
+      this.query = "";
+    },
+  },
+};
 </script>
 
 <style scoped>
