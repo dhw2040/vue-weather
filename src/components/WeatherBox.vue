@@ -12,6 +12,10 @@
       <div class="details">
         <div class="temp">{{ weatherData.main.temp }} °C</div>
         <span>feels like: {{ weatherData.main.feels_like }} °C</span>
+        <div>
+          max: {{ weatherData.main.temp_max }} °C, min:
+          {{ weatherData.main.temp_min }} °C
+        </div>
         <hr />
         <span class="summary">
           {{ weatherData.weather[0].main }},

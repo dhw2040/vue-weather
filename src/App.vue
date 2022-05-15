@@ -8,21 +8,6 @@
   <div id="app">
     <main>
       <SearchBox @weather-query="getWeatherQuery" />
-
-      <!-- <div class="weather-box" v-if="weather != null">
-        <div class="location">Toronto, Canada</div>
-        <div class="date">Fri May 13, 6:14pm</div>
-        <div class="weather">
-          <div class="icon">
-            <i class="fa-solid fa-sun"></i>
-          </div>
-          <div class="details">
-            <span class="temp">22 °C</span>
-            <hr />
-            <span class="summary"> Sunny </span>
-          </div>
-        </div>
-      </div> -->
       <WeatherBox :qry="query" />
     </main>
   </div>
