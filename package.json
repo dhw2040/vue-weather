@@ -1,0 +1,35 @@
+{
+  "name": "vue-weather",
+  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhw2040/vue-weather.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dhw2040/vue-weather/issues"
+  },
+  "homepage": "https://github.com/dhw2040/vue-weather#readme",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-async-handler": "^1.2.0",
+    "express-router": "^0.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.8"
+  },
+  "devDependencies": {
+    "eslint": "^8.11.0",
+    "eslint-plugin-react": "^7.29.4",
+    "nodemon": "^2.0.15"
+  },
+  "description": ""
+}
