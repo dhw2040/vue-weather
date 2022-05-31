@@ -6,10 +6,11 @@
   <router-view /> -->
 
   <div id="app">
-    <main>
+    <main :style="getBackgroundProps">
       <SearchBox @weather-query="getWeatherQuery" />
       <WeatherBox :qry="query" />
       <WeatherRadar />
+      {{ getBackgroundURL }}
     </main>
   </div>
 </template>
@@ -20,15 +21,34 @@ import WeatherBox from "./components/WeatherBox.vue";
 export default {
   name: "App",
   data() {
-    return {
-      api_key: "4adf2af9535e6bc15615b1fe824f621b",
-      url_base: "https://api.openweathermap.org/data/2.5/",
-      query: "",
-    };
+    return { query: "" };
   },
   methods: {
     getWeatherQuery(data) {
       this.query = data;
+    },
+  },
+  computed: {
+    getBackgroundProps() {
+      let now = new Date();
+      let hours = now.getHours();
+      let caption = "./assets/img/";
+      if (6 <= hours && hours < 12) {
+        caption += "sunrise.jpg";
+      } else if (12 <= hours && hours < 18) {
+        caption += "afternoon.jpg";
+      } else if (18 <= hours && hours < 21) {
+        caption += "sunset.jpg";
+      } else {
+        caption += "night.jpg";
+      }
+
+      return {
+        backgroundImage: `url(${caption})`,
+        backgroundSize: "cover",
+        backgroundPosition: "bottom",
+        transitions: "0.3s",
+      };
     },
   },
   components: { SearchBox, WeatherBox },
@@ -47,7 +67,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-image: url("./assets/sunset.png");
+  background-image: url("./assets/img/night.jpg");
   background-size: cover;
   background-position: bottom;
   transition: 0.3s;

@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 import logger from "morgan";
 import bodyParser from "body-parser";
 import newsRouter from "./routers/newsRouter.js";
+import weatherRouter from "./routers/weatherRouter.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const port = process.env.port || 5000; // env var
 
@@ -29,6 +33,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/news", newsRouter);
+app.use("/api/weather", weatherRouter);
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message });

@@ -36,9 +36,7 @@ export default {
   },
   data() {
     return {
-      api_key: "4adf2af9535e6bc15615b1fe824f621b",
-      url_base: "https://api.openweathermap.org/data/2.5/",
-      weatherData: {},
+      country: "",
     };
   },
   watch: {
@@ -48,16 +46,10 @@ export default {
   },
   methods: {
     fetchWeatherData() {
-      fetch(
-        `${this.url_base}weather?q=${this.qry}&units=metric&appid=${this.api_key}`
-      )
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-          }
-          return res.json();
-        })
-        .then(this.setWeatherData);
+      this.$store.dispatch("getWeatherData", {
+        city: this.qry,
+        country: this.country,
+      });
     },
     setWeatherData(data) {
       this.weatherData = data;
@@ -66,6 +58,14 @@ export default {
       let now = new Date();
       now = now.toString().substring(0, 25);
       return now;
+    },
+  },
+  computed: {
+    weatherData() {
+      return { ...this.$store.state.weatherData.data };
+    },
+    message() {
+      return { ...this.$store.state.weatherData.message };
     },
   },
 };

@@ -1,6 +1,5 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
-import path from "path";
 import fs from "fs";
 
 import fetch from "node-fetch";
@@ -18,20 +17,21 @@ newsRouter.get("/", function (req, res) {
 newsRouter.get(
   "/feed",
   expressAsyncHandler(async (req, res) => {
+    const sources = [];
     const response = await fetch(
       "https://www.theweathernetwork.com/ca/news/category/latest"
     );
     const body = await response.text();
     if (body) {
-      fs.writeFile(process.cwd() + "/weather.html", body, (err) => {
-        if (err) {
-          console.error(err);
-        }
-        console.log("File written Successfully");
-      });
+      // fs.writeFile(process.cwd() + "/weather.html", body, (err) => {
+      //   if (err) {
+      //     console.error(err);
+      //   }
+      //   console.log("File written Successfully");
+      // });
       const $ = cheerio.load(body);
 
-      let count = 0;
+      let responseMessage = "";
 
       $(".story-thumb").each(function (idx, e) {
         let story = {};
@@ -51,19 +51,21 @@ newsRouter.get(
                 .send({ message: "Failed while searching for existing story" });
             } else if (doc.length > 0) {
               console.log(`Same story exists with title ${story.title}`);
+              responseMessage =
+                responseMessage +
+                `Same story exists with title ${story.title}\n`;
             } else {
               const news = new News(story);
-              news.save(function (err, doc) {
-                if (err) {
+              news.save(function (error, doc) {
+                if (error) {
                   console.error.bind(
                     console,
-                    `Failed to create news number with title ${story.title}`
+                    `Failed to create news with title ${story.title}`
                   );
                 } else {
-                  console.log(
-                    `Successfully saved the story with title ${story.title}`
-                  );
-                  count = count + 1;
+                  responseMessage =
+                    responseMessage +
+                    `Successfully saved the story with title ${story.title}\n`;
                 }
               });
             }
@@ -72,7 +74,7 @@ newsRouter.get(
           console.log("Empty title and array, nothing to do here");
         }
       });
-      res.send(`Total ${count} stories have been populated`);
+      res.send({ message: responseMessage });
     } else {
       res.status(404).send({ message: "Page Not Found" });
     }
