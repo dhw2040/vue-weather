@@ -32,19 +32,19 @@ export default {
     getBackgroundProps() {
       let now = new Date();
       let hours = now.getHours();
-      let caption = "./assets/img/";
+      let caption;
       if (6 <= hours && hours < 12) {
-        caption += "sunrise.jpg";
+        caption = "sunrise.jpg";
       } else if (12 <= hours && hours < 18) {
-        caption += "afternoon.jpg";
+        caption = "afternoon.jpg";
       } else if (18 <= hours && hours < 21) {
-        caption += "sunset.jpg";
+        caption = "sunset.jpg";
       } else {
-        caption += "night.jpg";
+        caption = "night.jpg";
       }
 
       return {
-        backgroundImage: `url(${caption})`,
+        backgroundImage: "url(" + require("@/assets/img/" + caption) + ")",
         backgroundSize: "cover",
         backgroundPosition: "bottom",
         transitions: "0.3s",
@@ -67,10 +67,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  background-image: url("./assets/img/night.jpg");
-  background-size: cover;
-  background-position: bottom;
-  transition: 0.3s;
 }
 
 nav {
