@@ -51,9 +51,6 @@ export default {
         country: this.country,
       });
     },
-    setWeatherData(data) {
-      this.weatherData = data;
-    },
     formatDate() {
       let now = new Date();
       now = now.toString().substring(0, 25);
@@ -67,11 +64,26 @@ export default {
     message() {
       return { ...this.$store.state.weatherData.message };
     },
+    getShadowProps() {
+      const time = this.$store.getters.TIME_OF_DAY;
+      let colorProp;
+      if (time === "sunrise") {
+        colorProp = "rgba(255, 166, 115, 0.75)";
+      } else if (time === "afternoon") {
+        colorProp = "rgba(255, 217, 82, 0.75)";
+      } else if (time === "sunset") {
+        colorProp = "rgba(255, 41, 248, 0.75)";
+      } else {
+        colorProp = "rgba(27, 35, 64, 0.75)";
+      }
+
+      return "0 0 1rem 1rem " + colorProp;
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
 .weather-box {
   color: floralwhite;
 }
@@ -84,6 +96,7 @@ export default {
   font-style: italic;
   margin-bottom: 2rem;
 }
+
 .weather-box .weather {
   display: flex;
   align-items: center;
@@ -93,7 +106,7 @@ export default {
   height: 15rem;
   width: 40%;
   background-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 1rem 1rem rgba(255, 102, 0, 0.5);
+  box-shadow: v-bind("getShadowProps");
 }
 
 hr {
@@ -126,8 +139,14 @@ hr {
 
 /* FONT AWESOME */
 
-.fa-sun {
-  color: coral;
+.fa-solid {
   font-size: 10rem;
+}
+
+.fa-sun {
+  color: rgba(255, 217, 82);
+}
+
+.fa-moon {
 }
 </style>

@@ -5,10 +5,14 @@ import * as actions from "./actions";
 export default createStore({
   state: {
     weatherData: {},
+    timeOfDay: "",
   },
   getters: {
     WEATHER_DATA: (state) => {
       return state.weatherData;
+    },
+    TIME_OF_DAY: (state) => {
+      return state.timeOfDay;
     },
   },
   mutations,

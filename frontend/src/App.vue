@@ -30,26 +30,13 @@ export default {
   },
   computed: {
     getBackgroundProps() {
-      let now = new Date();
-      let hours = now.getHours();
-      let caption;
-      if (6 <= hours && hours < 12) {
-        caption = "sunrise.jpg";
-      } else if (12 <= hours && hours < 18) {
-        caption = "afternoon.jpg";
-      } else if (18 <= hours && hours < 21) {
-        caption = "sunset.jpg";
-      } else {
-        caption = "night.jpg";
-      }
-
-      return {
-        backgroundImage: "url(" + require("@/assets/img/" + caption) + ")",
-        backgroundSize: "cover",
-        backgroundPosition: "bottom",
-        transitions: "0.3s",
-      };
+      const time = this.$store.getters.TIME_OF_DAY;
+      let caption = time + ".jpg";
+      return "url(" + require("@/assets/img/" + caption) + ")";
     },
+  },
+  created() {
+    this.$store.dispatch("getTimeOfDay");
   },
   components: { SearchBox, WeatherBox },
 };
@@ -67,6 +54,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-image: v-bind("getBackgroundProps");
+  /* background-image: url("./assets/img/afternoon.jpg"); */
+  background-size: cover;
+  background-position: bottom;
+  transition: 0.3s;
 }
 
 nav {
