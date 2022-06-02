@@ -9,8 +9,6 @@
     <main :style="getBackgroundProps">
       <SearchBox @weather-query="getWeatherQuery" />
       <WeatherBox :qry="query" />
-      <WeatherRadar />
-      {{ getBackgroundURL }}
     </main>
   </div>
 </template>

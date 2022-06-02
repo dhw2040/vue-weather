@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       query: "",
-      shadowCssProp: "0 0 0.5rem 0.1rem rgba(255, 166, 115, 0.75)",
+      shadowCssProp: "0 0 0.5rem 0.2rem ",
     };
   },
   methods: {
@@ -27,22 +27,17 @@ export default {
       this.query = "";
     },
   },
-  computed: {
-    getShadowProps() {
-      const time = this.$store.getters.TIME_OF_DAY;
-      let colorProp;
-      if (time === "sunrise") {
-        colorProp = "rgba(255, 166, 115, 0.75)";
-      } else if (time === "afternoon") {
-        colorProp = "rgba(255, 217, 82, 0.75)";
-      } else if (time === "sunset") {
-        colorProp = "rgba(255, 41, 248, 0.75)";
-      } else {
-        colorProp = "rgba(27, 35, 64, 0.75)";
-      }
-
-      return "0 0 0.5rem 0.1rem " + colorProp;
-    },
+  created() {
+    const time = this.$store.getters.TIME_OF_DAY;
+    if (time === "sunrise") {
+      this.shadowCssProp += "rgba(255, 166, 115, 0.75)";
+    } else if (time === "afternoon") {
+      this.shadowCssProp += "rgba(255, 217, 82, 0.75)";
+    } else if (time === "sunset") {
+      this.shadowCssProp += "rgba(255, 41, 248, 0.75)";
+    } else {
+      this.shadowCssProp += "rgba(136, 145, 189, 0.95)";
+    }
   },
 };
 </script>
@@ -75,8 +70,7 @@ export default {
 }
 
 .input-field:focus {
-  /* box-shadow: 0 0 0.5rem 0.1rem rgba(0, 183, 255, 0.75); */
-  box-shadow: v-bind("getShadowProps");
+  box-shadow: v-bind("shadowCssProp");
   background-color: rgba(255, 255, 255, 0.75);
 }
 </style>

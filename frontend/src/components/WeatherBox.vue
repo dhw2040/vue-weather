@@ -7,7 +7,8 @@
     <div class="date">{{ formatDate() }}</div>
     <div class="weather">
       <div class="icon">
-        <i class="fa-solid fa-sun"></i>
+        <i :class="`wi wi-owm-${weatherData.weather[0].id}`"></i>
+        <!-- {{ weatherData.weather[0].main.toLowerCase() }} -->
       </div>
       <div class="details">
         <div class="temp">{{ weatherData.main.temp.toFixed(1) }} °C</div>
@@ -37,6 +38,8 @@ export default {
   data() {
     return {
       country: "",
+      shadowCssProp: "0 0 1rem 1rem ",
+      iconProp: "",
     };
   },
   watch: {
@@ -64,21 +67,18 @@ export default {
     message() {
       return { ...this.$store.state.weatherData.message };
     },
-    getShadowProps() {
-      const time = this.$store.getters.TIME_OF_DAY;
-      let colorProp;
-      if (time === "sunrise") {
-        colorProp = "rgba(255, 166, 115, 0.75)";
-      } else if (time === "afternoon") {
-        colorProp = "rgba(255, 217, 82, 0.75)";
-      } else if (time === "sunset") {
-        colorProp = "rgba(255, 41, 248, 0.75)";
-      } else {
-        colorProp = "rgba(27, 35, 64, 0.75)";
-      }
-
-      return "0 0 1rem 1rem " + colorProp;
-    },
+  },
+  created() {
+    const time = this.$store.getters.TIME_OF_DAY;
+    if (time === "sunrise") {
+      this.shadowCssProp += "rgba(255, 166, 115, 0.75)";
+    } else if (time === "afternoon") {
+      this.shadowCssProp += "rgba(255, 217, 82, 0.75)";
+    } else if (time === "sunset") {
+      this.shadowCssProp += "rgba(255, 41, 248, 0.75)";
+    } else {
+      this.shadowCssProp += "rgba(27, 35, 64, 0.75)";
+    }
   },
 };
 </script>
@@ -104,9 +104,9 @@ export default {
   border-radius: 2rem 0 2rem 0;
   margin: auto;
   height: 15rem;
-  width: 40%;
+  width: 50%;
   background-color: rgba(255, 255, 255, 0.5);
-  box-shadow: v-bind("getShadowProps");
+  box-shadow: v-bind("shadowCssProp");
 }
 
 hr {
@@ -139,8 +139,8 @@ hr {
 
 /* FONT AWESOME */
 
-.fa-solid {
-  font-size: 10rem;
+.wi {
+  font-size: 9rem;
 }
 
 .fa-sun {
