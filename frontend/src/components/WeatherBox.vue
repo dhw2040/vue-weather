@@ -49,7 +49,6 @@ export default {
     select: function () {
       let wd = this.$store.getters.WEATHER_DATA.data;
       this.weatherData = wd[this.select];
-      console.log(this.weatherData);
     },
   },
   methods: {

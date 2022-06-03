@@ -8,7 +8,7 @@
       v-model="query"
       @keydown.enter="submit"
     />
-    <div class="location" v-show="isShowing">
+    <div class="location" v-show="show">
       <div
         class="city"
         v-for="(city, index) of weatherData"
@@ -34,6 +34,7 @@ export default {
       query: "",
       country: "",
       shadowCssProp: "0 0 0.5rem 0.2rem ",
+      show: false,
     };
   },
   methods: {
@@ -43,21 +44,16 @@ export default {
         country: this.country,
       });
       this.query = "";
+      this.show = true;
     },
     select(idx) {
       this.$emit("selected", Number(idx));
+      this.show = false;
     },
   },
   computed: {
     weatherData() {
       return this.$store.getters.WEATHER_DATA.data;
-    },
-    isShowing() {
-      if (this.$store.getters.WEATHER_DATA.success) {
-        return this.$store.getters.WEATHER_DATA.success;
-      } else {
-        return false;
-      }
     },
     message() {
       return this.$store.getters.WEATHER_DATA.message;
