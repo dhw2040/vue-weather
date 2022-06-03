@@ -1,5 +1,5 @@
 <template>
-  <div class="weather-box" v-if="weatherData.main !== undefined">
+  <div class="weather-box" v-if="weatherData">
     <div class="location">
       {{ weatherData.name }},
       {{ weatherData.sys.country }}
@@ -8,7 +8,6 @@
     <div class="weather">
       <div class="icon">
         <i :class="`wi wi-owm-${weatherData.weather[0].id}`"></i>
-        <!-- {{ weatherData.weather[0].main.toLowerCase() }} -->
       </div>
       <div class="details">
         <div class="temp">{{ weatherData.main.temp.toFixed(1) }} °C</div>
@@ -34,17 +33,23 @@ export default {
     qry: {
       type: String,
     },
+    select: {
+      type: Number,
+    },
   },
   data() {
     return {
       country: "",
       shadowCssProp: "0 0 1rem 1rem ",
       iconProp: "",
+      weatherData: null,
     };
   },
   watch: {
-    qry: function () {
-      this.fetchWeatherData();
+    select: function () {
+      let wd = this.$store.getters.WEATHER_DATA.data;
+      this.weatherData = wd[this.select];
+      console.log(this.weatherData);
     },
   },
   methods: {
@@ -60,14 +65,7 @@ export default {
       return now;
     },
   },
-  computed: {
-    weatherData() {
-      return { ...this.$store.state.weatherData.data };
-    },
-    message() {
-      return { ...this.$store.state.weatherData.message };
-    },
-  },
+  computed: {},
   created() {
     const time = this.$store.getters.TIME_OF_DAY;
     if (time === "sunrise") {
@@ -103,7 +101,8 @@ export default {
   justify-content: center;
   border-radius: 2rem 0 2rem 0;
   margin: auto;
-  height: 15rem;
+  padding: 1rem 1.8rem;
+  height: 17rem;
   width: 50%;
   background-color: rgba(255, 255, 255, 0.5);
   box-shadow: v-bind("shadowCssProp");
@@ -140,13 +139,10 @@ hr {
 /* FONT AWESOME */
 
 .wi {
-  font-size: 9rem;
+  font-size: 9.2rem;
 }
 
 .fa-sun {
   color: rgba(255, 217, 82);
-}
-
-.fa-moon {
 }
 </style>

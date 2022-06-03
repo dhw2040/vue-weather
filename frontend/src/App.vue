@@ -7,8 +7,8 @@
 
   <div id="app">
     <main :style="getBackgroundProps">
-      <SearchBox @weather-query="getWeatherQuery" />
-      <WeatherBox :qry="query" />
+      <SearchBox @weather-query="getWeatherQuery" @selected="getIndex" />
+      <WeatherBox :select="index" />
     </main>
   </div>
 </template>
@@ -19,11 +19,14 @@ import WeatherBox from "./components/WeatherBox.vue";
 export default {
   name: "App",
   data() {
-    return { query: "" };
+    return { query: null, index: null };
   },
   methods: {
     getWeatherQuery(data) {
       this.query = data;
+    },
+    getIndex(i) {
+      this.index = i;
     },
   },
   computed: {

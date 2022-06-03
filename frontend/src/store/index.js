@@ -4,8 +4,9 @@ import * as actions from "./actions";
 
 export default createStore({
   state: {
-    weatherData: {},
+    weatherData: [],
     timeOfDay: "",
+    success: false,
   },
   getters: {
     WEATHER_DATA: (state) => {
